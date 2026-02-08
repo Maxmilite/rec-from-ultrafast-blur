@@ -1,0 +1,523 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Recovering 3D Shapes from Ultra-Fast Motion-Blurred Images</title>
+
+  <!-- Global site tag (gtag.js) - Google Analytics -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-SNIGASODSIJ"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+
+    function gtag() {
+      dataLayer.push(arguments);
+    }
+
+    gtag('js', new Date());
+
+    gtag('config', 'G-SNIGASODSIJ');
+  </script>
+
+  <link href="https://fonts.googleapis.com/css?family=Google+Sans|Noto+Sans|Castoro|Inter:wght@300;400;600;800|Space+Grotesk:wght@300;500;700"
+        rel="stylesheet">
+
+  <link rel="stylesheet" href="./static/css/bulma.min.css">
+  <link rel="stylesheet" href="./static/css/bulma-carousel.min.css">
+  <link rel="stylesheet" href="./static/css/bulma-slider.min.css">
+  <link rel="stylesheet" href="./static/css/fontawesome.all.min.css">
+  <link rel="stylesheet"
+        href="https://cdn.jsdelivr.net/gh/jpswalsh/academicons@1/css/academicons.min.css">
+  <link rel="stylesheet" href="./static/css/index.css">
+  <link rel="stylesheet" href="./static/css/comparison.css">
+  <link rel="stylesheet" href="./static/css/gallery.css">
+  <link rel="icon" href="./static/images/favicon.svg">
+
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+  <script defer src="./static/js/fontawesome.all.min.js"></script>
+  <script src="./static/js/bulma-carousel.min.js"></script>
+  <script src="./static/js/bulma-slider.min.js"></script>
+  <script src="./static/js/index.js"></script>
+  <script src="./static/js/comparison.js"></script>
+</head>
+<body>
+<section class="hero">
+  <div class="hero-body" style="display: flex; align-items: center; justify-content: center;">
+    <div class="container is-max-desktop">
+      <!-- <div style="text-align: center;">
+        <img src="static/images/trademark.png" alt="Amap Inc." style="height: 60px; filter: invert(1);" />
+      </div> -->
+      <div class="columns is-centered">
+        <div class="column has-text-centered">
+          <h1 class="title is-3 publication-title">
+            Recovering 3D Shapes from Ultra-Fast Motion-Blurred Images
+          </h1>
+          <div class="is-size-5 publication-authors">
+            <span class="author-block"><a href="https://maxmilite.github.io/">Fei Yu</a><sup>1</sup>,</span>
+            <span class="author-block">Shudan Guo<sup>1</sup>,</span>
+            <span class="author-block"><a href="https://irc.cs.sdu.edu.cn/~shiqing/index.html">Shiqing Xin</a><sup>1</sup>,</span>
+            <span class="author-block"><a href="https://wangningbei.github.io/">Beibei Wang</a><sup>2</sup>,</span>
+            <span class="author-block"><a href="https://haisenzhao.github.io/">Haisen Zhao</a><sup>1†</sup>,</span>
+            <span class="author-block"><a href="https://wenzhengchen.github.io/">Wenzheng Chen</a><sup>3</sup></span>
+          </div>
+          <div class="is-size-5 publication-authors">
+            <span class="author-block"><sup>1</sup>Shandong University</span>
+            &nbsp;
+            <span class="author-block"><sup>2</sup>Nanjing University</span>
+            &nbsp;
+            <span class="author-block"><sup>3</sup>Peking University</span>
+          </div>
+          <div class="is-size-6" style="margin-top: 0.5em;">
+            <span class="author-block"><sup>†</sup>Corresponding author.</span>
+          </div>
+
+          <div class="is-size-5" style="margin-top: 1em;">
+            <span class="author-block" style="font-weight: 600;">3DV 2026</span>
+          </div>
+
+          <div class="column has-text-centered">
+            <div class="publication-links">
+              <!-- PDF Link. -->
+              <span class="link-block">
+                <a href="#"
+                   class="external-link button is-normal is-rounded is-dark">
+                  <span class="icon">
+                      <i class="ai ai-arxiv"></i>
+                  </span>
+                  <span>arXiv</span>
+                </a>
+              </span>
+              <span class="link-block">
+                <a href="./static/paper.pdf"
+                   class="external-link button is-normal is-rounded is-dark">
+                  <span class="icon">
+                      <i class="fas fa-file-pdf"></i>
+                  </span>
+                  <span>Paper (PDF)</span>
+                </a>
+              </span>
+              <span class="link-block">
+                <a href="https://github.com/Maxmilite/rec-from-ultrafast-blur"
+                   class="external-link button is-normal is-rounded is-dark">
+                  <span class="icon">
+                      <i class="fab fa-github"></i>
+                  </span>
+                  <span>Code (Coming Soon)</span>
+                </a>
+              </span>
+            </div>
+
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Teaser Section -->
+<section class="section" style="padding: 2rem 1.5rem;">
+  <div class="container is-max-desktop">
+    <div class="columns is-centered">
+      <div class="column">
+        <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; align-items: center;">
+          <div>
+            <img src="./static/images/real-world/setup.png" style="width:100%; border-radius: 8px;" alt="Experimental Setup">
+          </div>
+          <div>
+            <img src="./static/images/real-world/captured_6.png" style="width:100%; border-radius: 8px;" alt="Motion-blurred capture">
+          </div>
+          <div>
+            <img src="./static/images/real-world/res-6-black.png" style="width:100%; border-radius: 8px;" alt="Recovered 3D shape">
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="section">
+  <div class="container is-max-desktop">
+    <!-- Abstract. -->
+    <div class="columns is-centered has-text-centered">
+      <div class="column is-four-fifths">
+        <h2 class="title is-3">Abstract</h2>
+        <div class="content has-text-justified">
+          <p>
+            We consider the problem of 3D shape recovery from ultra-fast motion-blurred images.
+            While 3D reconstruction from static images has been extensively studied, recovering geometry from extreme motion-blurred images remains challenging.
+            Such scenarios frequently occur in both natural and industrial settings, such as fast-moving objects in sports (e.g., balls) or rotating machinery, where rapid motion distorts object appearance and makes traditional 3D reconstruction techniques like Multi-View Stereo (MVS) ineffective.
+          </p>
+          <p>
+            In this paper, we propose a novel inverse rendering approach for shape recovery from ultra-fast motion-blurred images.
+            While conventional rendering techniques typically synthesize blur by averaging across multiple frames, we identify a major computational bottleneck in the repeated computation of barycentric weights. To address this, we propose a fast barycentric coordinate solver, which significantly reduces computational overhead and achieves a speedup of up to <b>4.57×</b>, enabling efficient and photorealistic simulation of high-speed motion.
+            Crucially, our method is fully differentiable, allowing gradients to propagate from rendered images to the underlying 3D shape, thereby facilitating shape recovery through inverse rendering.
+          </p>
+          <p>
+            We validate our approach on two representative motion types: rapid translation and rotation.
+            Experimental results demonstrate that our method enables efficient and realistic modeling of ultra-fast moving objects in the forward simulation.
+            Moreover, it successfully recovers 3D shapes from 2D imagery of objects undergoing extreme translational and rotational motion, advancing the boundaries of vision-based 3D reconstruction.
+          </p>
+        </div>
+      </div>
+    </div>
+    <!--/ Abstract. -->
+  </div>
+</section>
+
+<section class="section">
+  <div class="container is-max-desktop">
+    <h2 class="title is-3">Speed Comparison</h2>
+    <div class="content has-text-centered">
+      <img src="./static/images/pipeline/speed-comparison.png" alt="Speed Comparison" style="width:80%; filter: invert(1) hue-rotate(180deg);">
+      <h3 class="subtitle" style="margin-top: 1em;">
+        <span style="color: var(--color-accent); font-weight: bold; font-size: 1.5em;">4.57× Faster</span> Motion Blur Rendering
+      </h3>
+      <div class="content has-text-justified" style="margin-top: 1em;">
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="section">
+  <div class="container is-max-desktop">
+
+    <h2 class="title is-3">Method Overview</h2>
+    <div class="content has-text-centered">
+      <img src="./static/images/pipeline/our-method.png" alt="Method Pipeline" style="width:100%; filter: invert(1) hue-rotate(180deg);">
+    </div>
+    <div class="content has-text-justified" style="margin-top: 1em;">
+    </div>
+  </div>
+
+</section>
+
+<!-- Rotation Recovery Results -->
+<section class="section">
+  <div class="container is-max-desktop">
+    <h2 class="title is-3">Rotation Recovery Results</h2>
+    <p class="content has-text-justified">
+      Our method successfully recovers 3D shapes from motion-blurred images of rotating objects. Below shows the comparison between ground truth, input blurred images, and our reconstructed results across different objects.
+    </p>
+
+    <div style="margin-top: 2em;">
+      <!-- Header Row -->
+      <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; margin-bottom: 10px;">
+        <div class="has-text-centered" style="font-weight: 600;">Ground Truth</div>
+        <div class="has-text-centered" style="font-weight: 600;">Input (Blurred)</div>
+        <div class="has-text-centered" style="font-weight: 600;">Ours (Recovered)</div>
+      </div>
+
+      <!-- Car -->
+      <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; margin-bottom: 15px;">
+        <div><img src="./static/images/rotation/gt_car.png" alt="GT Car" style="width:100%;"></div>
+        <div><img src="./static/images/rotation/input_car.png" alt="Input Car" style="width:100%;"></div>
+        <div><img src="./static/images/rotation/output_car.png" alt="Output Car" style="width:100%;"></div>
+      </div>
+
+      <!-- Lamp -->
+      <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; margin-bottom: 15px;">
+        <div><img src="./static/images/rotation/gt_lamp.png" alt="GT Lamp" style="width:100%;"></div>
+        <div><img src="./static/images/rotation/input_lamp.png" alt="Input Lamp" style="width:100%;"></div>
+        <div><img src="./static/images/rotation/output_lamp.png" alt="Output Lamp" style="width:100%;"></div>
+      </div>
+
+      <!-- Ship -->
+      <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; margin-bottom: 15px;">
+        <div><img src="./static/images/rotation/gt_ship.png" alt="GT Ship" style="width:100%;"></div>
+        <div><img src="./static/images/rotation/input_ship.png" alt="Input Ship" style="width:100%;"></div>
+        <div><img src="./static/images/rotation/output_ship.png" alt="Output Ship" style="width:100%;"></div>
+      </div>
+
+      <!-- Spot -->
+      <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px;">
+        <div><img src="./static/images/rotation/gt_spot.png" alt="GT Spot" style="width:100%;"></div>
+        <div><img src="./static/images/rotation/input_spot.png" alt="Input Spot" style="width:100%;"></div>
+        <div><img src="./static/images/rotation/output_spot.png" alt="Output Spot" style="width:100%;"></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Translation Recovery Results -->
+<section class="section">
+  <div class="container is-max-desktop">
+    <h2 class="title is-3">Translation Recovery Results</h2>
+    <p class="content has-text-justified">
+      Our method also recovers both geometry and appearance from translational motion blur. The results demonstrate high-quality reconstruction compared to ground truth.
+    </p>
+
+    <div style="margin-top: 2em;">
+      <!-- Header Row -->
+      <div style="display: grid; grid-template-columns: repeat(6, 1fr); gap: 5px; margin-bottom: 10px; font-size: 0.85em;">
+        <div class="has-text-centered" style="font-weight: 600;">GT Still</div>
+        <div class="has-text-centered" style="font-weight: 600;">GT Blur</div>
+        <div class="has-text-centered" style="font-weight: 600;">Geometry</div>
+        <div class="has-text-centered" style="font-weight: 600;">Ours Still</div>
+        <div class="has-text-centered" style="font-weight: 600;">Ours Blur</div>
+        <div class="has-text-centered" style="font-weight: 600;">Baseline</div>
+      </div>
+
+      <!-- Result 1 -->
+      <div style="display: grid; grid-template-columns: repeat(6, 1fr); gap: 5px; margin-bottom: 10px;">
+        <div><img src="./static/images/translation/gt_still_1.png" style="width:100%;"></div>
+        <div><img src="./static/images/translation/gt_trans_1.png" style="width:100%;"></div>
+        <div><img src="./static/images/translation/geo_1.png" style="width:100%;"></div>
+        <div><img src="./static/images/translation/ours_still_1.png" style="width:100%;"></div>
+        <div><img src="./static/images/translation/ours_trans_1.png" style="width:100%;"></div>
+        <div><img src="./static/images/translation/sfb_1.png" style="width:100%;"></div>
+      </div>
+
+      <!-- Result 2 -->
+      <div style="display: grid; grid-template-columns: repeat(6, 1fr); gap: 5px; margin-bottom: 10px;">
+        <div><img src="./static/images/translation/gt_still_2.png" style="width:100%;"></div>
+        <div><img src="./static/images/translation/gt_trans_2.png" style="width:100%;"></div>
+        <div><img src="./static/images/translation/geo_2.png" style="width:100%;"></div>
+        <div><img src="./static/images/translation/ours_still_2.png" style="width:100%;"></div>
+        <div><img src="./static/images/translation/ours_trans_2.png" style="width:100%;"></div>
+        <div><img src="./static/images/translation/sfb_2.png" style="width:100%;"></div>
+      </div>
+
+      <!-- Result 3 -->
+      <div style="display: grid; grid-template-columns: repeat(6, 1fr); gap: 5px; margin-bottom: 10px;">
+        <div><img src="./static/images/translation/gt_still_3.png" style="width:100%;"></div>
+        <div><img src="./static/images/translation/gt_trans_3.png" style="width:100%;"></div>
+        <div><img src="./static/images/translation/geo_3.png" style="width:100%;"></div>
+        <div><img src="./static/images/translation/ours_still_3.png" style="width:100%;"></div>
+        <div><img src="./static/images/translation/ours_trans_3.png" style="width:100%;"></div>
+        <div><img src="./static/images/translation/sfb_3.png" style="width:100%;"></div>
+      </div>
+
+      <!-- Result 4 -->
+      <div style="display: grid; grid-template-columns: repeat(6, 1fr); gap: 5px;">
+        <div><img src="./static/images/translation/gt_still_4.png" style="width:100%;"></div>
+        <div><img src="./static/images/translation/gt_trans_4.png" style="width:100%;"></div>
+        <div><img src="./static/images/translation/geo_4.png" style="width:100%;"></div>
+        <div><img src="./static/images/translation/ours_still_4.png" style="width:100%;"></div>
+        <div><img src="./static/images/translation/ours_trans_4.png" style="width:100%;"></div>
+        <div><img src="./static/images/translation/sfb_4.png" style="width:100%;"></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Forward & Gradient Analysis -->
+<section class="section">
+  <div class="container is-max-desktop">
+    <h2 class="title is-3">Forward Rendering & Gradient Analysis</h2>
+    <p class="content has-text-justified">
+      Our rendered images and gradients exhibit high similarity to SoftRas across various motion cases and sample numbers, validating the correctness of our fast solver.
+    </p>
+
+    <div style="margin-top: 2em;">
+      <!-- Header Row -->
+      <div style="display: grid; grid-template-columns: 80px repeat(2, 1fr) 20px repeat(3, 1fr); gap: 5px; margin-bottom: 10px; font-size: 0.85em;">
+        <div></div>
+        <div class="has-text-centered" style="font-weight: 600;">Translation<br>10 Samples</div>
+        <div class="has-text-centered" style="font-weight: 600;">Translation<br>50 Samples</div>
+        <div></div>
+        <div class="has-text-centered" style="font-weight: 600;">Rotation<br>12 Samples</div>
+        <div class="has-text-centered" style="font-weight: 600;">Rotation<br>60 Samples</div>
+        <div class="has-text-centered" style="font-weight: 600;">Rotation<br>240 Samples</div>
+      </div>
+
+      <!-- Forward - SoftRas -->
+      <div style="display: grid; grid-template-columns: 80px repeat(2, 1fr) 20px repeat(3, 1fr); gap: 5px; margin-bottom: 5px;">
+        <div style="display: flex; align-items: center; justify-content: center; font-weight: 600; writing-mode: vertical-rl; transform: rotate(180deg);">Forward</div>
+        <div><img src="./static/images/analysis/forward/softras/trans_10.png" style="width:100%;"></div>
+        <div><img src="./static/images/analysis/forward/softras/trans_50.png" style="width:100%;"></div>
+        <div></div>
+        <div><img src="./static/images/analysis/forward/softras/rot_12x1.png" style="width:100%;"></div>
+        <div><img src="./static/images/analysis/forward/softras/rot_12x5.png" style="width:100%;"></div>
+        <div><img src="./static/images/analysis/forward/softras/rot_12x20.png" style="width:100%;"></div>
+      </div>
+
+      <!-- Forward - Ours -->
+      <div style="display: grid; grid-template-columns: 80px repeat(2, 1fr) 20px repeat(3, 1fr); gap: 5px; margin-bottom: 20px;">
+        <div style="display: flex; align-items: center; justify-content: center; font-size: 0.85em;">SoftRas ⬆<br>Ours ⬇</div>
+        <div><img src="./static/images/analysis/forward/ours/trans_10.png" style="width:100%;"></div>
+        <div><img src="./static/images/analysis/forward/ours/trans_50.png" style="width:100%;"></div>
+        <div></div>
+        <div><img src="./static/images/analysis/forward/ours/rot_12x1.png" style="width:100%;"></div>
+        <div><img src="./static/images/analysis/forward/ours/rot_12x5.png" style="width:100%;"></div>
+        <div><img src="./static/images/analysis/forward/ours/rot_12x20.png" style="width:100%;"></div>
+      </div>
+
+      <!-- Gradient - SoftRas -->
+      <div style="display: grid; grid-template-columns: 80px repeat(2, 1fr) 20px repeat(3, 1fr); gap: 5px; margin-bottom: 5px;">
+        <div style="display: flex; align-items: center; justify-content: center; font-weight: 600; writing-mode: vertical-rl; transform: rotate(180deg);">Gradient</div>
+        <div><img src="./static/images/analysis/backward/softras/trans_10.png" style="width:100%;"></div>
+        <div><img src="./static/images/analysis/backward/softras/trans_50.png" style="width:100%;"></div>
+        <div></div>
+        <div><img src="./static/images/analysis/backward/softras/rot_12x1.png" style="width:100%;"></div>
+        <div><img src="./static/images/analysis/backward/softras/rot_12x5.png" style="width:100%;"></div>
+        <div><img src="./static/images/analysis/backward/softras/rot_12x20.png" style="width:100%;"></div>
+      </div>
+
+      <!-- Gradient - Ours -->
+      <div style="display: grid; grid-template-columns: 80px repeat(2, 1fr) 20px repeat(3, 1fr); gap: 5px;">
+        <div style="display: flex; align-items: center; justify-content: center; font-size: 0.85em;">SoftRas ⬆<br>Ours ⬇</div>
+        <div><img src="./static/images/analysis/backward/ours/trans_10.png" style="width:100%;"></div>
+        <div><img src="./static/images/analysis/backward/ours/trans_50.png" style="width:100%;"></div>
+        <div></div>
+        <div><img src="./static/images/analysis/backward/ours/rot_12x1.png" style="width:100%;"></div>
+        <div><img src="./static/images/analysis/backward/ours/rot_12x5.png" style="width:100%;"></div>
+        <div><img src="./static/images/analysis/backward/ours/rot_12x20.png" style="width:100%;"></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Real-world Experiments -->
+<section class="section">
+  <div class="container is-max-desktop">
+    <h2 class="title is-3">Real-world Experiments</h2>
+
+    <!-- Setup and Overview -->
+    <div class="columns is-centered" style="margin-bottom: 0em;">
+      <div class="column">
+        <h3 class="title is-4">Experimental Setup</h3>
+        <img src="./static/images/real-world/setup.png" alt="Experimental Setup" style="width:100%;">
+      </div>
+      <div class="column">
+        <h3 class="title is-4">Reconstruction Results</h3>
+        <img src="./static/images/real-world/result_3.png" alt="Real-world Result" style="width:100%; margin-bottom: 1em;">
+        <div class="content has-text-justified">
+        </div>
+      </div>
+    </div>
+    <p class="content has-text-justified" style="margin-bottom: 2em;">
+      We validate our method on real captured motion-blurred images using a 100Hz high-speed camera and controlled motion rig.
+    </p>
+
+
+    <!-- More Real-world Cases -->
+    <h3 class="title is-4">More Real-world Results</h3>
+    <p class="content has-text-justified">
+      Below shows more examples of real-world motion blur recovery, compared with the state-of-the-art method. 
+    </p>
+
+    <div style="margin-top: 2em;">
+      <!-- Header Row -->
+      <div style="display: grid; grid-template-columns: repeat(4, 1fr); gap: 8px; margin-bottom: 10px;">
+        <div class="has-text-centered" style="font-weight: 600;">Captured</div>
+        <div class="has-text-centered" style="font-weight: 600;">Baseline</div>
+        <div class="has-text-centered" style="font-weight: 600;">Ours</div>
+        <div class="has-text-centered" style="font-weight: 600;">Ground Truth</div>
+      </div>
+
+      <!-- Case 6 -->
+      <div style="display: grid; grid-template-columns: repeat(4, 1fr); gap: 8px; margin-bottom: 10px;">
+        <div><img src="./static/images/real-world/captured_6.png" style="width:100%;"></div>
+        <div><img src="./static/images/real-world/sfb_6.png" style="width:100%;"></div>
+        <div><img src="./static/images/real-world/res_6.png" style="width:100%;"></div>
+        <div><img src="./static/images/real-world/gt_6.png" style="width:100%;"></div>
+      </div>
+
+      <!-- Case 1 -->
+      <div style="display: grid; grid-template-columns: repeat(4, 1fr); gap: 8px; margin-bottom: 10px;">
+        <div><img src="./static/images/real-world/captured_1.png" style="width:100%;"></div>
+        <div><img src="./static/images/real-world/sfb_1.png" style="width:100%;"></div>
+        <div><img src="./static/images/real-world/res_1.png" style="width:100%;"></div>
+        <div><img src="./static/images/real-world/gt_1.png" style="width:100%;"></div>
+      </div>
+
+      <!-- Case 3 -->
+      <div style="display: grid; grid-template-columns: repeat(4, 1fr); gap: 8px; margin-bottom: 10px;">
+        <div><img src="./static/images/real-world/captured_3.png" style="width:100%;"></div>
+        <div><img src="./static/images/real-world/sfb_3.png" style="width:100%;"></div>
+        <div><img src="./static/images/real-world/res_3.png" style="width:100%;"></div>
+        <div><img src="./static/images/real-world/gt_3.png" style="width:100%;"></div>
+      </div>
+
+      <!-- Case 5 -->
+      <div style="display: grid; grid-template-columns: repeat(4, 1fr); gap: 8px;">
+        <div><img src="./static/images/real-world/captured_5.png" style="width:100%;"></div>
+        <div><img src="./static/images/real-world/sfb_5.png" style="width:100%;"></div>
+        <div><img src="./static/images/real-world/res_5.png" style="width:100%;"></div>
+        <div><img src="./static/images/real-world/gt_5.png" style="width:100%;"></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="section" id="BibTeX">
+  <div class="container is-max-desktop content">
+    <h2 class="title">BibTeX</h2>
+    <pre><code>@inproceedings{yu2026recovering,
+    title={Recovering 3D Shapes from Ultra-Fast Motion-Blurred Images},
+    author={Yu, Fei and Guo, Shudan and Xin, Shiqing and Wang, Beibei and Zhao, Haisen and Chen, Wenzheng},
+    booktitle={International Conference on 3D Vision (3DV)},
+    year={2026}
+}</code></pre>
+  </div>
+</section>
+
+
+<footer class="footer" style="padding: 1.5rem 1.5rem 1.5rem;">
+  <div class="container">
+    <div class="columns is-centered">
+      <div class="column is-80 has-text-centered">
+        <div class="content">
+          <p>
+            The template of this website is borrowed from <a
+              href="https://github.com/nerfies/nerfies.github.io">Nerfies</a>.
+            Thanks for the author's great work.
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<script>
+  document.addEventListener('DOMContentLoaded', function() {
+    var video = document.getElementById('framework-video');
+    if (video) {
+      video.addEventListener('ended', function() {
+        setTimeout(function() {
+          video.play();
+        }, 10000); // 10000ms = 10s
+      });
+    }
+  });
+</script>
+<script>
+  document.addEventListener('DOMContentLoaded', () => {
+    const observerOptions = {
+      root: null,
+      rootMargin: '0px',
+      threshold: 0.1
+    };
+
+    const observer = new IntersectionObserver((entries, observer) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('is-visible');
+          observer.unobserve(entry.target);
+        }
+      });
+    }, observerOptions);
+
+    const elements = document.querySelectorAll('.bento-card, .publication-video, .video-compare-container, .gallery-container, .title, .content');
+    elements.forEach(el => {
+      el.classList.add('fade-in-up');
+      observer.observe(el);
+    });
+    
+    // Scroll to land
+    const scrollIndicator = document.querySelector('.scroll-down-indicator');
+    if (scrollIndicator) {
+      scrollIndicator.addEventListener('click', () => {
+        const firstSection = document.querySelector('.hero.teaser');
+        if (firstSection) {
+          firstSection.scrollIntoView({ behavior: 'smooth' });
+        } else {
+           window.scrollBy({ top: window.innerHeight, behavior: 'smooth' });
+        }
+      });
+    }
+  });
+</script>
+</body>
+</html>
